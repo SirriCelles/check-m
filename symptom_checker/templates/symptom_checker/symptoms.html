@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block symptoms_checker %}
+<div class="container mb-5 bg-light">
+    <div class="row counts mb-5" style="margin-top: 150px !important;">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-9 col-md-10  shadow py-3">
+            <div class="main"> 
+                <div class="mb-4">
+                    <h6>What symptom is bothering you most?</h6>
+                </div>                
+                <!-- Another variation with a button -->
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchSymInput" placeholder="Search">
+                    <!-- <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class='bx bx-search'></i>
+                    </button> -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 "></div>
+    </div>
+
+    <!-- <div class="row" id="noResultsRow">
+        <div class="col"></div>
+        <div class="col-8">
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong><i class='bx bxs-info-square m-2'></i></strong> No results found - please try another search term
+            </div>
+        </div>
+        <div class="col"></div>
+    </div> -->
+
+
+    <div style="margin-left: 5% !important; margin-right: 5% !important;">
+        {% for key, values in sym_dict.items %}
+        <div id="symptomListDiv">
+           <div>
+            <h3>{{key}}</h3>
+           </div>
+            <div class="row mb-5 mt-1">
+                {% for value in values %}
+
+                    <div class="col-sm-6 col-lg-4 col-md-6 mb-1" id="symptomValueDiv">
+                        <div class="list-group">
+                            <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="color: black;">
+                                {{value}}
+                                <i class='bx bx-chevron-right-square' style="font-size: 24px; color:white; background:#1977cc;  background: linear-gradient(to bottom right, rgba(25,119,204), rgb(20, 94, 159), rgb(14, 67, 113), rgba(25,119,204,1));"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+     {% endfor %}
+    </div>
+</div>
+{% endblock symptoms_checker %}
+
+{% block appointment_section %}
+    {% if user.is_authenticated %}
+        {% include 'appointment.html' %}
+    {% endif %}
+{% endblock appointment_section %}
+
+
+<!-- Ajax content -->
+{% block ajax_content %}
+    <script>
+        $(document).ready(function(){
+            var search;
+            $("#searchSymInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#symptomListDiv div").filter(function() {
+                   let search =  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+                    
+            });
+
+            $("#symptomValueDiv button").on("click", function() {
+               var symptom = $(this)[0].innerText
+        
+              $.ajax({
+                  url: "{% url 'get_diagnosis' %}",
+                  type: "GET",
+                  dataType: "json",
+                  data : {symptom: symptom},
+                  success: function(response) {
+                      console.log(response)
+                      window.location.href = "{% url 'specific_symptom' %}"
+
+                  },
+                  error: function(error) {
+                      console.log(error)
+                  }
+              })
+            })
+           
+        });
+    </script>
+{% endblock ajax_content %}

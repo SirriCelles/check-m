@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block base_style %}
+    <!-- <style>
+        /* HIDE RADIO */
+        .gender_selector [type=radio] { 
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        /* IMAGE STYLES */
+        .gender_selector [type=radio] + i {
+            cursor: pointer;
+        }
+        
+        /* CHECKED STYLES */
+        .gender_selector [type=radio]:checked + i {
+            color: #77b6ee !important;
+        }
+
+        [type=radio]:checked  {
+            background-color: #77b6ee !important;
+            color: whitesmoke;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+    </style> -->
+{% endblock base_style %}
+
+    {% block symptom_prediction %}
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" style="margin-top: 10% !important;">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>{{sym}} Symptom Checker</h2>
+            </div>
+        </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+
+{% endblock symptom_prediction %}
+
+{% block stepper_section %}
+    {% include 'symptom_checker/test.html' %}
+{% endblock stepper_section %}
+
+{% block ajax_content %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#sym_specific").hide()
+            // Step show event
+            $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+                //alert("You are on step "+stepNumber+" now");
+                if(stepPosition === 'first'){
+                    $("#prev-btn").addClass('disabled');
+                }else if(stepPosition === 'final'){
+                    $("#next-btn").addClass('disabled');
+                }else{
+                    $("#prev-btn").removeClass('disabled');
+                    $("#next-btn").removeClass('disabled');
+                }
+
+                if(stepPosition === 'third') {
+                    // Geting Number of Days
+                    $("#numberOf_days_btn").on('click', function() {
+                        let numOfDays = $("#num_of_days").val()
+                        console.log(numOfDays)
+                        if (numOfDays !== 0)  {
+                            $("#num_of_days_col").hide()
+                            $("#sym_specific").show()
+    
+                            $.ajax({
+                                url: "{% url 'tree_to_code' %}",
+                                type: 'POST',
+                                dataType: "json",
+                                data: {numOfDays: numOfDays,
+                                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                                },
+                                success: function(res) { 
+                                    console.log(res)
+                                    console.log(res.precaution)
+
+                                    if(res) {
+                                        var preList = res.precaution.length
+                                        
+                                        if(res.youMayHave) {
+                                            $("#youMayHave").html('<div>You May Have <strong>'+res.youMayHave+'</strong></div>')
+                                            $("#youMayHavedesc").text(res.desc)
+                                        }
+                                        else {
+                                            var youMayHave2 = res.youMayHave2
+                                            $("#youMayHaveJoint").html('<div>You May Have <strong>'+res.youMayHave1+'</strong> or </div><strong>'+youMayHave2+'</strong><br>')
+                                            $('#youMayHavedesc1').text(res.desc1)
+                                            $('#youMayHavedesc2').text(res.desc2)
+                                        }
+                                        for (var x=0; x < preList; x++) {
+                                            $("#precautionField").append('<li>'+res.precaution[x]+'</li>')
+                                        }
+                                        
+                                        
+                                    }
+                                    console.log(res.symptoms_given.length)
+                                    $("#sym_specific").show()
+                                    var numOfsysmList = $("#numOfsysmList").val() 
+                                    var maxField = res.symptoms_given.length
+                                    var wrapper = $("#field_wrapper")
+                                    var fieldHTML = '<div id="symLabel">' + 
+                                        '<div><div class="form-check-inline"><label class="form-check-label"><input type="radio" class="form-check-input" name="symStaus" value="yes" id="symStaus">' + 
+                                            'Yes' + '</label></div>' + '<div class="form-check-inline"><label class="form-check-label">'+
+                                                '<input type="radio" class="form-check-input" name="symStaus" value="no" id="symStaus">No</label>'+
+                                                '</div></div></div>'                            
+                                     
+                                    
+                                },
+                                error: function(err) {
+                                    console.log(err)
+                                }
+                            })
+                        }
+
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Days cannot be Zero',
+                                footer: '<p>Suggest any Day greater than 0</p>'
+                              });
+                        }
+                            
+                    });
+                }
+             });
+
+             $('#smartwizard').smartWizard({
+                selected: 0,
+                theme: 'arrows',
+                transitionEffect:'fade',
+                showStepURLhash: true,
+                
+            });
+
+            $("#prev-btn").on("click", function() {
+                // Navigate previous
+                $('#smartwizard').smartWizard("prev");
+                return true;
+            });
+
+            $("#next-btn").on("click", function() {
+                // Navigate next
+                $('#smartwizard').smartWizard("next");
+                return true;
+            });
+
+           
+
+            // Smart Wizard
+           // $('#smartwizard').smartWizard({
+              //  selected: 0,
+               // theme: 'arrows',
+               // transitionEffect:'fade',
+                //showStepURLhash: true,                  
+            //});               
+        });
+    </script>
+{% endblock ajax_content %}
+

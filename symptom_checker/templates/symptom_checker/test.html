@@ -1,0 +1,138 @@
+<div class="container" style="border: none !important;">
+
+    <!-- SmartWizard html -->
+    <div id="smartwizard" style="border: none !important;">
+        <ul>
+            <li><a href="#step-1">
+                    <h4>Symptom Checker</h4><small>{{sym}}</small>
+                </a>
+            </li>
+            <li>
+                <a href="#step-2">
+                    <h4>Basic Details</h4><small>Some basic questions</small>
+                </a></li>
+            <li><a href="#step-3">
+                    <h4>Detailed Questions</h4><small>predicting....</small>
+                </a></li>
+            <li><a href="#step-4">
+                    <h4>Further Work</h4><small>what to do next</small>
+                </a></li>
+        </ul>
+
+        <div>
+            <div id="step-1" class="">
+                <div class="row" style="margin-top: 3% !important;">
+                    <div class="col-md-6 mr-3 bg-light" style="border-left: 6px solid #2c4964;">
+                        <h3 class="border-bottom border-gray pb-2"></h3>
+                        {{sym}}
+                    </div>
+                    <div class="col-md-5 ml-3" style="border-left: 6px solid #77b6ee">
+                        <h3 class="border-bottom border-gray pb-2">Your Answers</h3>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                </div>
+
+            </div>
+            <div id="step-2" class="">
+                <div class="row" style="margin-top: 3% !important;">
+                    <div class="col-md-6 mr-3 bg-light" style="border-left: 6px solid #2c4964;">
+                        <h3 class="border-bottom border-gray pb-2">Basic Details</h3>
+                        <div>These questions are about the patient – that may be you, or someone else.</div>
+                        <br>
+                        <!-- Including form -->
+
+                        {% include 'symptom_checker/gender_age.html' %}
+
+                    </div>
+                    <div class="col-md-5 ml-3" style="border-left: 6px solid #77b6ee">
+                        <h3 class="border-bottom border-gray pb-2">Your Answers</h3>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                </div>
+            </div>
+            <div id="step-3" class="">
+                <div class="row" style="margin-top: 3% !important;">
+                    <div class="col-md-6 mr-3 bg-light" style="border-left: 6px solid #2c4964;" id="detailed_questions">
+                        <h3 class="border-bottom border-gray pb-2">Detailed Questions</h3>
+                        <div id="res1" class="mt-3">{{res.res1}}</div>
+                        <div id="sym_num">{{res.sym_num}} ) {{sym}}</div>
+                        <div class="row mt-3 mr-3" id="num_of_days_col">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="num_of_days">For how long now (In Days)</label>
+                                    <input type="number" class="form-control" id="num_of_days" required>
+                                </div>
+                                <button type="button" id="numberOf_days_btn">send</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 mr-3">
+                            <div class="col">
+                                <div  id="sym_specific">
+                                    <div>Results below are associated to <strong> {{sym}}</strong></div>
+                                    <br>
+                                    <div id="sym_specific_holderCon">
+                                        <div id="youMayHave"></div>
+                                        <div id="youMayHaveJoint"></div>
+                                        <div>
+                                            <h4>Description</h4>
+                                            <div id="youMayHavedesc"></div>
+                                            <div>
+                                                <ol>
+                                                    <li id="youMayHavedesc1"></li>
+                                                    <li id="youMayHavedesc2"></li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4>Precautions</h4>
+                                            <div>The Following Measures are Advised
+                                                <ol id="precautionField">
+
+                                                </ol>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <form id="getSymlist_form">
+                                            {%csrf_token %}
+                                            <div class="field_wrapper" id="field_wrapper">
+                                                                                              
+                                            </div>
+                                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                                        </form>
+                                        
+                                        
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ml-3" style="border-left: 6px solid #77b6ee;">
+                        <h3 class="border-bottom border-gray pb-2">Your Answers</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="step-4" class="">
+                <h3 class="border-bottom border-gray pb-2">Step 4 Content</h3>
+                <div class="card">
+                    <div class="card-header">Doctor Details</div>
+                    <div class="card-block p-0">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>Example Doctor</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>example@example.com</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

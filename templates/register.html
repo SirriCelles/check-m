@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Check@m</title>
+
+     <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'log_reg/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'log_reg/css/style.css' %} ">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+
+     <!-- sweet alert  -->
+    <link rel="stylesheet" href="{% static 'vendor/sweetalert2/dist/sweetalert2.min.css' %}">
+
+    <!-- toastr -->
+    <link rel="stylesheet" href="{% static '/vendor/toastr/build/toastr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Register</h2>
+                        <form  method="POST" class="register-form needs-validation" id="register-form" data-url="/create/" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="fname" id="fname" placeholder="First Name" required/>
+                                <div class="invalid-feedback">**required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="lname" id="lname" placeholder="Last Name" required/>
+                                <div class="invalid-feedback">**required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="username" id="username" placeholder="Username" required/>
+                                <div class="invalid-feedback">**required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
+                                <div class="invalid-feedback">**required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="pass" id="pass" placeholder="Password" required/>
+                                <div class="invalid-feedback">**required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" required/>
+                                <div class="invalid-feedback">you need to confirm your password</div>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree to all in the <a href="#" class="term-service">Terms of service</a></label>
+                                <div class="invalid-feedback">required</div>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{% static 'img/signup-image.jpg' %} " alt="sing up image"></figure>
+                        <a href="{% url 'login_page' %}" class="signup-image-link">Already have an Accout</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+  
+
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src=" {% static 'vendor/jquery/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %} "></script>
+    <script src="{% static 'vendor/toastr/toastr.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{% static 'vendor/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    
+
+
+   <!-- form validation -->
+   
+   <script>
+       // Disable form submissions if there are invalid fields
+       (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+            });
+            }, false);
+        })();
+   </script>
+
+   <script>
+        $(document).ready(function(){  
+                
+            $('#register-form').on('submit', function(event){
+                event.preventDefault();
+                var forms = $('.needs-validation');
+                var is_valid;
+                var valid = Array.prototype.filter.call(forms, function(form){
+                    if(form.checkValidity() === false){
+                        is_valid = false;
+                    }
+                    else {is_valid = true}
+                });
+
+                console.log(is_valid)
+                
+                if (is_valid === true) {
+                    var $thisURL = $(this).attr('data-url') || window.location.href
+                    //console.log("{% url 'register_user' %}") 
+                    $.ajax({
+                        url: $thisURL,
+                        type: "POST",
+                        data: {
+                            first_name: $('#fname').val(),
+                            last_name: $('#lname').val(),
+                            username: $('#username').val(),
+                            email: $('#email').val(),
+                            password: $('#pass').val(),
+                            re_password: $('#re_pass').val(),
+                            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        dataType: "json" ,
+                        async: true,
+                        success: function(response) {
+                            console.log(response)
+                            var $title = response.title;
+                            var text = response.text;
+                            if(response) {
+                                $('#register-form').removeClass('was-validated')
+                                $("#register-form").trigger('reset'); 
+                                Swal.fire({
+                                    title: '<strong>'+$title+'</strong>',
+                                    icon: 'success',
+                                    html:
+                                        text,
+                                    showCloseButton: true,
+                                    showCancelButton: false,
+                                    focusConfirm: false,
+                                    confirmButtonText:
+                                        '<i class="fa fa-thumbs-up"></i> ok',
+                                    confirmButtonAriaLabel: 'Thumbs up, great!',
+                                }) 
+                                //setTimeout(function(){
+                                    //window.location.href="{%url 'acc_email' %}"
+                                //},3000)                     
+                            }                                                      
+                        },
+
+                        error: function(err) {
+                            console.log(err)
+                            if(err.responseJSON.text) {
+                                toastr.error(err.responseJSON.text, err.responseJSON.title)
+                            }
+                            else {
+                                console.log(err)
+                            }
+                        }
+                    })
+                }                
+            });
+
+        });
+    </script>
+    
+
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

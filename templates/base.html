@@ -1,0 +1,375 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Check@m</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- === Custom base stlyes ====-->
+    {% block base_style %}
+    {% endblock base_style %}
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Others-->
+     <!-- Include Bootstrap CSS -->
+      
+     <!-- Include SmartWizard CSS -->
+    <link href="{% static 'vendor/dist/css/smart_wizard.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Optional SmartWizard theme -->
+    <link href="{% static 'vendor/dist/css/smart_wizard_theme_arrows.css' %}" rel="stylesheet" type="text/css" />
+    
+</head>
+
+<body>
+    <!-- ======= Top Bar ======= -->
+    <div id="topbar" class="d-none d-lg-flex align-items-center fixed-top">
+        <div class="container d-flex">
+            <div class="contact-info mr-auto">
+                <i class="icofont-envelope"></i> <a href="mailto:smarthelp@gmail.com">checkamhelp@gmail.com</a>
+                <i class="icofont-phone"></i> +237 1510
+                <i class="icofont-google-map"></i> Buea, Cameroon
+            </div>
+            <div class="social-links">
+                <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+                <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
+                <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
+                <a href="#" class="skype"><i class="icofont-skype"></i></a>
+                <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo mr-auto"><a href="">Check@m</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#symptom">Symptop checker</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li class="drop-down"><a href="">More</a>
+                        <ul>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#services">Service finder</a></li>
+                            <li><a href="#departments">Health topics</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav><!-- .nav-menu -->
+
+            {% if user.is_authenticated %}
+                <a href="#appointment" class="appointment-btn scrollto m-2">Make an Appointment</a>
+                <span class="ml-4">
+                    <div class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{% static 'img/icons8-checked-user-male-40.png' %}" alt="">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item"><i class="icofont-user"></i>{{user.username}}</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}"><i class="icofont-logout"></i>logout</a>
+                            <a class="dropdown-item" href="#"><i class="icofont-settings"></i>My Profile</a>
+                        </div>
+                    </div>
+                </span>
+            {% else %}
+                <span><a href="{% url 'login_page' %}" class="appointment-btn scrollto">Signin</a></span>
+                <span><a href="{% url 'reg_page' %}" class="appointment-btn scrollto">Resgister</a></span>
+            {% endif %}
+            
+            
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    {% block hero_section %}
+    {% endblock hero_section %}
+    <!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ===== symptom_prediction Section === -->
+        {% block symptom_prediction %}
+        {% endblock symptom_prediction %}
+        <!-- End symptom_prediction Section -->
+
+        <!-- ===== stepper Section === -->
+        {% block stepper_section %}
+        {% endblock stepper_section %}
+        <!-- End stepper Section -->
+
+        <!-- ======= Why Us Section ======= -->
+        {% block home_section %}
+        {% endblock home_section %}
+       <!-- End Why Us Section -->
+
+        <!-- ======= About Section ======= -->
+        {% block about_section %}
+        {% endblock about_section %}
+        <!-- End About Section -->
+
+        <!-- ===== Symptom Checker Section ===== -->
+        {% block sym_checker_tab %}
+        {% endblock sym_checker_tab %}
+        <!-- End Symptom Checker Section -->
+
+         <!-- ===== Symptom Checker Section ===== -->
+        {% block symptoms_checker %}
+        {% endblock symptoms_checker %}
+        <!-- End Symptom Checker Section -->
+
+        <!-- ======= Counts Section ======= -->
+        <!-- End Counts Section -->
+
+        <!-- ======= Services Section ======= -->
+        <!-- End Services Section -->
+
+        <!-- ======= Appointment Section ======= -->
+        {% block appointment_section %}
+        {% endblock appointment_section %}
+        <!-- End Appointment Section -->
+
+        <!-- ======= Departments Section ======= -->
+        <!-- End Departments Section -->
+
+        <!-- ======= Doctors Section ======= -->
+        {% block doctors_section %}
+        {% endblock doctors_section %}
+        <!-- End Doctors Section -->
+
+        <!-- ======= Frequently Asked Questions Section ======= -->
+        <!-- End Frequently Asked Questions Section -->
+
+        <!-- ======= Testimonials Section ======= -->
+        <!-- End Testimonials Section -->
+
+        <!-- ======= Gallery Section ======= -->
+        <!-- End Gallery Section -->
+
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Contact</h2>
+                    
+                </div>
+            </div>
+
+            <div style="width: 100%">
+                <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
+                    src="https://maps.google.com/maps?width=100%25&amp;height=350&amp;hl=en&amp;q=Buea%20,South%20West%20Region,%20Cameroon+(SmartCare)&amp;t=&amp;z=8&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen>
+                </iframe>
+                {% comment %} <a href="http://www.gps.ie/">Find GPS coordinates</a> {% endcomment %}
+            </div>
+
+
+            <div class="container">
+                <div class="row mt-5">
+
+                    <div class="col-lg-4">
+                        <div class="info">
+                            <div class="address">
+                                <i class="icofont-google-map"></i>
+                                <h4>Location:</h4>
+                                <p>Buea, Cameroon</p>
+                            </div>
+
+                            <div class="email">
+                                <i class="icofont-envelope"></i>
+                                <h4>Email:</h4>
+                                <p>checkamhelp@gmail.com</p>
+                            </div>
+
+                            <div class="phone">
+                                <i class="icofont-phone"></i>
+                                <h4>Call:</h4>
+                                <p>+237 1510</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-8 mt-5 mt-lg-0">
+
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        placeholder="Your Name" data-rule="minlen:4"
+                                        data-msg="Please enter at least 4 chars" />
+                                    <div class="validate"></div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Your Email" data-rule="email"
+                                        data-msg="Please enter a valid email" />
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" id="subject"
+                                    placeholder="Subject" data-rule="minlen:4"
+                                    data-msg="Please enter at least 8 chars of subject" />
+                                <div class="validate"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" data-rule="required"
+                                    data-msg="Please write something for us" placeholder="Message"></textarea>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Send Message</button></div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Contact Section -->
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>Check@m</h3>
+                        <p>
+                            Buea <br>
+                            Cameroon <br><br>
+                            <strong>Phone:</strong> +237 1510<br>
+                            <strong>Email:</strong> checkamhelp@gmail.com<br>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Symptom checker</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Service Finder</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Medicine</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Health topics</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Contact</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms and services</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy Policy</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 footer-newsletter">
+                        <h4>Join Our Newsletter</h4>
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Subscribe">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-md-flex py-4">
+
+            <div class="mr-md-auto text-center text-md-left">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Check@m</span></strong>
+                </div>
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
+                    {% comment %} Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> {% endcomment %}
+                </div>
+            </div>
+            <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Others -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Include SmartWizard JavaScript source -->
+    <script type="text/javascript" src="{% static 'vendor/dist/js/jquery.smartWizard.js' %}"></script>
+    
+<!-- ===== Ajax Content ===-->
+{% block ajax_content %}
+{% endblock ajax_content %}
+<!-- End Ajax Content-->>
+
+</body>
+
+</html>

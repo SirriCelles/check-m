@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block hero_section %}
+    {% include 'hero_section.html' %}
+{% endblock hero_section %}
+
+
+{% block home_section %}
+    {% include 'home_section.html' %}
+{% endblock home_section %}
+
+
+{% block about_section %}
+    {% include 'about.html' %}
+{% endblock about_section %}
+
+
+{% block sym_checker_tab %}
+    {% include 'sym_checker_tab.html' %}
+{% endblock sym_checker_tab %}
+
+
+
+{% block appointment_section %}
+    {% if user.is_authenticated %}
+        {% include 'appointment.html' %}
+    {% endif %}
+{% endblock appointment_section %}
+
+
+{% block doctors_section %}
+    {% include 'doctors.html' %}
+{% endblock doctors_section %}
+
+

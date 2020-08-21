@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Check@m</title>
+
+      <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'log_reg/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'log_reg/css/style.css' %} ">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+
+     <!-- sweet alert  -->
+    <link rel="stylesheet" href="{% static 'vendor/sweetalert2/dist/sweetalert2.min.css' %}">
+
+    <!-- toastr -->
+    <link rel="stylesheet" href="{% static '/vendor/toastr/build/toastr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+    <div class="main">
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="{% static 'img/signin-image.jpg' %}" alt="sing up image"></figure>
+                            <a href="{% url 'reg_page' %}" class="signup-image-link">Create an account</a>
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Login</h2>
+                        <form method="POST" class="register-form needs-validation" id="login-form" data-url="{% url 'user_login' %}" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="username" id="username" placeholder="Username" required/>
+                                <div class="invalid-feedback">This field is required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="password" placeholder="Password" required/>
+                                <div class="invalid-feedback">This field is required</div>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            </div>
+                        </form>
+                        <div class="social-login">
+                            <span class="social-label">Or login with</span>
+                            <ul class="socials">
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src=" {% static 'vendor/jquery/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %} "></script>
+    <script src="{% static 'vendor/toastr/toastr.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{% static 'vendor/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
+    <script>        
+        // Disable form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+            });
+            }, false);
+        })();
+    </script>
+
+
+    <script>
+        $(document).ready(function(){  
+                
+            $('#login-form').on('submit', function(event){
+                event.preventDefault();
+                var forms = $('.needs-validation');
+                var login_valid;
+                var valid = Array.prototype.filter.call(forms, function(form){
+                    if(form.checkValidity() === false){
+                        login_valid = false;
+                    }
+                    else {login_valid = true}
+                });
+
+                console.log(login_valid)
+                
+                if (login_valid === true) {
+                    var $thisURL = $(this).attr('data-url') || window.location.href
+                    //console.log("{% url 'register_user' %}") 
+                    $.ajax({
+                        url: $thisURL,
+                        type: "POST",
+                        data: {
+                            username: $('#username').val(),
+                            password: $('#password').val(),
+                            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        dataType: "json" ,
+                        async: true,
+                        success: function(response) {
+                            if(response) {
+                                console.log(response)
+                                const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: true,
+                                onOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                                })
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: response.text
+                                })
+                                $('#login-form').removeClass('was-validated')
+                                $("#login-form").trigger('reset');
+                                setTimeout(function(){
+                                    window.location.href="{%url 'index' %}";
+                                },3000)
+                            }                                                      
+                        },
+
+                        error: function(err) {
+                            console.log(err)
+                            if(err.responseJSON.text) {
+                                toastr.error(err.responseJSON.text)
+                            }
+                            else {
+                                console.log(err)
+                            }
+                        }
+                    })
+                }                
+            });
+
+        });
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

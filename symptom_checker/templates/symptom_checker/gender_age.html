@@ -1,0 +1,42 @@
+<p>Select your gender</p>
+                        <div class="gender_selector p-3">
+                            <form action="POST" class="needs-validation" novalidate id="gender_selector_form">
+                                {% csrf_token %}
+                                <div class="invalid-feedback">Please choose a gender</div>
+                                
+                                <div class="form-group form-check">
+                                    <label class="gender_selector form-check-label">
+                                        <input class="form-check-input" type="radio" name="user_gender" value="male" id="user_gender">
+                                        <i class='bx bx-male' style="color: gainsboro; font-size: 60px"></i>
+                                    </label>
+                                    <p>Male</p>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <label class="gender_selector form-check-label">
+                                        <input class="form-check-input" type="radio" name="user_gender" value="female" id="user_gender">
+                                        <i class='bx bx-female' style="color: gainsboro; font-size: 60px"></i>
+                                       
+                                    </label>
+                                    <p> Female</p>
+                                    
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" placeholder="Enter Age"
+                                            name="patients_age" id="patients_age" required>
+                                        <div class="invalid-feedback">*required</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <button id="age-btn" type="button" class="age_selector">
+                                                <input type="radio" name="optradio">Years
+                                            </button>
+                                            <button id="age-btn" type="button" class="age_selector">
+                                                <input type="radio" name="optradio">Months
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
