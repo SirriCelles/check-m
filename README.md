@@ -1,0 +1,1 @@
+Check@m app built with python. uses ML to inteligently perdict diseases
